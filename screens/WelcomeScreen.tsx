@@ -1,43 +1,68 @@
-import { Button, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-export default function WelcomeScreen({ navigation }: any) {
+export default function WelcomeScreen({navigation}: any) {
     return (
-        <ImageBackground
-            source={{ uri: "https://images.pexels.com/photos/1805164/pexels-photo-1805164.jpeg" }}
-            style={styles.img}
-            resizeMode="cover"
-        >
-            <View style={styles.container}>
-                <View >
-                    <Text style={styles.title}>HEYDI HERRERA</Text>
-                    <Button
-                        title='INGRESAR'
-                        color={'purple'}
-                        onPress={() => navigation.navigate("Botton")}
+        <View style={styles.container}>
+            {/* Imagen */}
+            <Image />
 
-                    />
-                </View>
+            {/* Título */}
+            <Text style={styles.title}>Bienvenido a nuestra aplicación!</Text>
+
+            {/* Botones */}
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity 
+                    style={styles.button}
+                    onPress={() => navigation.navigate('Login')} // Navega a la pantalla de Login
+                >
+                    <Text style={styles.buttonText}>Iniciar sesión</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                    style={styles.button}
+                    onPress={() => navigation.navigate('Registro')} // Navega a la pantalla de Registro
+                >
+                    <Text style={styles.buttonText}>Registrarse</Text>
+                </TouchableOpacity>
             </View>
-        </ImageBackground>
-    )
-}
+        </View>
+    );
+};
 
+// Estilos
 const styles = StyleSheet.create({
-    img: {
-        flex: 1,
-        width: '100%',
-        height: '100%'
-    },
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#fff',
+    },
+    image: {
+        width: 200, // Ajusta según el tamaño de tu imagen
+        height: 200,
+        marginBottom: 20,
     },
     title: {
-        fontSize: 35,
-        textAlign: 'center',
+        fontSize: 24,
         fontWeight: 'bold',
-        color: 'black',
+        marginBottom: 40,
+        textAlign: 'center',
     },
-})
+    buttonContainer: {
+        width: '80%',
+        alignItems: 'center',
+    },
+    button: {
+        backgroundColor: '#007BFF',
+        padding: 15,
+        width: '100%',
+        marginBottom: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+    }
+});

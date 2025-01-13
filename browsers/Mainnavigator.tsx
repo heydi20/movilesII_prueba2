@@ -1,43 +1,49 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+
+import React from "react";
+import LoginScreen from "../screens/LoginScreen";
+import RegistroScreen from "../screens/RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
-import Screen1 from "../screens/Screen1";
-import Screen2 from "../screens/Screen2";
-import Screen3 from "../screens/Screen3";
-import Screen4 from "../screens/Screen4";
+import OperacionesScreen from "../screens/OperacionesScreen";
+import ProductosScreen from "../screens/ProductosScreen";
+import PerfilScreen from "../screens/PerfilScreen";
 
-
-
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MyTabs(){
+function MyStack() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen 
+                name="Login" 
+                component={LoginScreen} 
+                options={() => ({ headerShown: false })} 
+            />
+            <Stack.Screen name="Registro" component={RegistroScreen} />
+            
+        </Stack.Navigator>
+    );
+}
+
+function MyTab() {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Pagina1" component={Screen1} />
-            <Tab.Screen name="Pagina2" component={Screen2} />
-            <Tab.Screen name='Pagina3' component={Screen3 } />
-            <Tab.Screen name='Pagina4' component={ Screen4} />
+            <Tab.Screen name="Welcome" component={MyTab} />
+            <Tab.Screen name="Operaciones" component={OperacionesScreen} />
+            <Tab.Screen name="Productos" component={ProductosScreen} />
+            <Tab.Screen name="Perfil" component={PerfilScreen} />
         </Tab.Navigator>
     );
 }
 
-const Stack=createStackNavigator()
-function MyStack(){
-    return(
-        <Stack.Navigator screenOptions={()=>({headerShown:false})}>
-            <Stack.Screen name ='Welcome' component={WelcomeScreen}/>
-            <Stack.Screen name ='Botton' component={MyTabs}/>
-        </Stack.Navigator>
-    )
-}
-
-
-export default function BottomTabNavigator(){
+export default function Navegador() {
     return (
         <NavigationContainer>
-            <MyStack/>
+            <MyStack />
         </NavigationContainer>
     );
-
 }
+
