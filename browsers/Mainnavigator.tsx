@@ -23,8 +23,7 @@ function MyStack() {
                 options={() => ({ headerShown: false })} 
             />
             <Stack.Screen name="Registro" component={RegistroScreen} />
-            <Tab.Screen name="Mytab" component={MyTab} />
-            
+            <Tab.Screen name="Mytab" component={MyTab} />  
         </Stack.Navigator>
     );
 }
@@ -32,9 +31,7 @@ function MyStack() {
 function MyTab() {
     return (
         <Tab.Navigator>
-            
             <Tab.Screen name="Operaciones" component={OperacionesScreen} />
-            
             <Tab.Screen name="Perfil" component={PerfilScreen} />
         </Tab.Navigator>
     );

@@ -48,6 +48,7 @@ import {
           Alert.alert('Error al registrar', error.message);
           console.error('Error al crear usuario:', error.code, error.message);
         });
+        Alert.alert('Exitoso', 'Usuario Creado');
     }
   
     return (
