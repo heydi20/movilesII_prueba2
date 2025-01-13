@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import { doc, getDoc } from "firebase/firestore";
-//import { db } from './firebaseConfig'; // Importa la configuración de Firebase
 import { getDatabase, onValue, ref } from 'firebase/database';
 import { auth } from '../config/Config';
 
@@ -10,25 +8,28 @@ const PerfilScreen = () => {
 
   useEffect(() => {
     const fetchUserData = () => {
-      const db = getDatabase();
-      const userId = auth.currentUser?.uid; // Obtiene el UID del usuario autenticado
-  
-      if (userId) {
-        const userRef = ref(db, `users/${userId}`); // Ruta a los datos del usuario
-        onValue(userRef, (snapshot) => {
-          if (snapshot.exists()) {
-            setUser(snapshot.val()); // Obtiene los datos del usuario
-          } else {
-            console.log('No se encontraron datos del usuario.');
-          }
-        }, (error) => {
-          console.error('Error al obtener los datos:', error);
-        });
-      } else {
+      const userId = auth.currentUser?.uid;
+
+      if (!userId) {
         console.log('Usuario no autenticado.');
+        return;
       }
+
+      const db = getDatabase();
+      const userRef = ref(db, `users/${userId}`);
+
+      onValue(userRef, (snapshot) => {
+        if (snapshot.exists()) {
+          setUser(snapshot.val());
+          console.log('Datos del usuario:', snapshot.val());
+        } else {
+          console.log('No se encontraron datos del usuario.');
+        }
+      }, (error) => {
+        console.error('Error al obtener los datos:', error);
+      });
     };
-  
+
     fetchUserData();
   }, []);
 
@@ -43,33 +44,19 @@ const PerfilScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        {/* Información de perfil */}
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Información de perfil</Text>
           <View style={styles.itemContainer}>
             <Text style={styles.label}>Nombre completo</Text>
-            <Text style={styles.value}>{user.fullName}</Text>
+            <Text style={styles.value}>{user.usuario}</Text>
           </View>
-          <View style={styles.itemContainer}>
-            <Text style={styles.label}>Saludo de bienvenida</Text>
-            <Text style={styles.value}>{user.greeting}</Text>
-          </View>
-          <View style={styles.itemContainer}>
-            <Text style={styles.label}>Autorización de uso de datos</Text>
-            <Text style={[styles.value, styles.authorized]}>{user.dataAuthorization}</Text>
-          </View>
-        </View>
-
-        {/* Información de contacto */}
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Mantén actualizada tu información</Text>
           <View style={styles.itemContainer}>
             <Text style={styles.label}>Número de celular</Text>
-            <Text style={styles.value}>{user.phoneNumber}</Text>
+            <Text style={styles.value}>{user.celular}</Text>
           </View>
           <View style={styles.itemContainer}>
             <Text style={styles.label}>Correo electrónico</Text>
-            <Text style={styles.value}>{user.email}</Text>
+            <Text style={styles.value}>{user.correo}</Text>
           </View>
         </View>
       </ScrollView>
@@ -110,10 +97,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000',
     marginTop: 4,
-  },
-  authorized: {
-    color: 'green',
-    fontWeight: 'bold',
   },
   loading: {
     fontSize: 18,

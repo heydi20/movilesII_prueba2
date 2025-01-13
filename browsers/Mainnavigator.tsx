@@ -7,7 +7,7 @@ import LoginScreen from "../screens/LoginScreen";
 import RegistroScreen from "../screens/RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import OperacionesScreen from "../screens/OperacionesScreen";
-import ProductosScreen from "../screens/ProductosScreen";
+//import ProductosScreen from "../screens/ProductosScreen";
 import PerfilScreen from "../screens/PerfilScreen";
 
 const Stack = createStackNavigator();
@@ -23,6 +23,7 @@ function MyStack() {
                 options={() => ({ headerShown: false })} 
             />
             <Stack.Screen name="Registro" component={RegistroScreen} />
+            <Tab.Screen name="Mytab" component={MyTab} />
             
         </Stack.Navigator>
     );
@@ -31,9 +32,9 @@ function MyStack() {
 function MyTab() {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Welcome" component={MyTab} />
+            
             <Tab.Screen name="Operaciones" component={OperacionesScreen} />
-            <Tab.Screen name="Productos" component={ProductosScreen} />
+            
             <Tab.Screen name="Perfil" component={PerfilScreen} />
         </Tab.Navigator>
     );
